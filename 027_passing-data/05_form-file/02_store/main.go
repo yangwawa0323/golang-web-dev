@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"html/template"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -28,6 +30,7 @@ func foo(w http.ResponseWriter, req *http.Request) {
 
 		// open
 		f, h, err := req.FormFile("q")
+		fmt.Println("request.FormFile FileHeader is :", h)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -46,6 +49,9 @@ func foo(w http.ResponseWriter, req *http.Request) {
 		s = string(bs)
 
 		// store on server
+		// Use os.Create() function create a new file,
+		// The filename is combinated filepath.Join() and
+		// FileHeader.Filename
 		dst, err := os.Create(filepath.Join("./user/", h.Filename))
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -53,7 +59,10 @@ func foo(w http.ResponseWriter, req *http.Request) {
 		}
 		defer dst.Close()
 
-		_, err = dst.Write(bs)
+		// There are two method to write file, one is use File.Write() function
+		// Other is use io.Copy the bytes.NewBuffer
+		// _, err = dst.Write(bs)
+		_, err = io.Copy(dst, bytes.NewBuffer(bs))
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return

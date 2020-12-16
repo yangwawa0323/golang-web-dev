@@ -29,9 +29,10 @@ func foo(w http.ResponseWriter, req *http.Request) {
 	// body
 	bs := make([]byte, req.ContentLength)
 	req.Body.Read(bs)
-	body := string(bs)
+	// body := string(bs)
 
-	err := tpl.ExecuteTemplate(w, "index.gohtml", body)
+	// err := tpl.ExecuteTemplate(w, "index.gohtml", body)
+	err := tpl.ExecuteTemplate(w, "index.gohtml", &person{"yang", "kun", false})
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		log.Fatalln(err)

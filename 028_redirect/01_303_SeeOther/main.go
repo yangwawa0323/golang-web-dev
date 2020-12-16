@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"html/template"
+	"io"
 	"net/http"
 )
 
@@ -21,6 +22,7 @@ func main() {
 }
 
 func foo(w http.ResponseWriter, req *http.Request) {
+	io.WriteString(w, "index page")
 	fmt.Print("Your request method at foo: ", req.Method, "\n\n")
 }
 

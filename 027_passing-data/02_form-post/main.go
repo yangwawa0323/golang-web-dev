@@ -11,6 +11,7 @@ func main() {
 	http.ListenAndServe(":8080", nil)
 }
 
+// Set response header and write message into response
 func foo(w http.ResponseWriter, req *http.Request) {
 	v := req.FormValue("q")
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")

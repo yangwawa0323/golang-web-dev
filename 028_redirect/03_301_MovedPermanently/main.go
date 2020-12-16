@@ -18,5 +18,7 @@ func foo(w http.ResponseWriter, req *http.Request) {
 
 func bar(w http.ResponseWriter, req *http.Request) {
 	fmt.Println("Your request method at bar:", req.Method)
+	// http.StatusMovedPermanently
+	// StatusMovedPermanently  = 301 // RFC 7231, 6.4.2
 	http.Redirect(w, req, "/", http.StatusMovedPermanently)
 }

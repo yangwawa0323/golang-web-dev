@@ -16,7 +16,10 @@
 <br>
 
 {{if .}}
-<h1>BODY: {{.}}</h1>
+
+<div>FirstName: {{ .FirstName }}</div>
+<div>LastName: {{ .LastName }}</div>
+<div>Subscribed: {{ .Subscribed }}</div>
 {{end}}
 
 {{template "footer"}}
